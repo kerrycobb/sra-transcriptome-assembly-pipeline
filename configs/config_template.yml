@@ -1,0 +1,10 @@
+species: Genus species
+individuals:
+    - 1:
+        runs:
+            - SRR*******
+            - SRR*******
+    - 2:
+        runs:
+            - SRR*******
+            - SRR*******    

@@ -1,0 +1,5 @@
+species: Escherichia coli
+individuals:
+    - 1:
+        runs:
+            - ERR2198608

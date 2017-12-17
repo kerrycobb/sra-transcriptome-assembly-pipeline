@@ -1,17 +1,18 @@
-configfile: 'configs/paa_boulengeri.yml'
-workdir: '/home/kac0070/frog_trans/paa_boulengeri'
 
-localrules: all
+
+localrules: all, concatenate
+
 rule all:
     input:
-        expand('{sample}/trinity-{sample}/', sample=config['runs']),
+        expand('trinity-{sample}/', sample=config['runs']),
 
 #-------------------------------------------------------------------------------
+# download sra files
 rule ascp:
     output:
-        temp('{sample}/{sample}.sra')
+        temp('{sample}.sra')
     log:
-        '{sample}/logs/'
+        'logs/'
     threads: 1
     params:
         mem = '1G',
@@ -31,14 +32,15 @@ rule ascp:
         '''
 
 #-------------------------------------------------------------------------------
+# convert sra file to fastq
 rule fqdump:
     input:
-        '{sample}/{sample}.sra'
+        '{sample}.sra'
     output:
-        temp('{sample}/{sample}_1.fastq'),
-        temp('{sample}/{sample}_2.fastq')
+        temp('{sample}_1.fastq'),
+        temp('{sample}_2.fastq')
     log:
-        '{sample}/logs/'
+        'logs/'
     threads: 1
     params:
         mem = '1G',
@@ -54,17 +56,18 @@ rule fqdump:
         '''
 
 #-------------------------------------------------------------------------------
+# quality filtering and adapter trimming
 rule afterqc:
     input:
-        a = '{sample}/{sample}_1.fastq',
-        b = '{sample}/{sample}_2.fastq'
+        a = '{sample}_1.fastq',
+        b = '{sample}_2.fastq'
     output:
-        a = '{sample}/{sample}_1.good.fq',
-        b = '{sample}/{sample}_2.good.fq',
-        c = temp('{sample}/{sample}_1.bad.fq'),
-        d = temp('{sample}/{sample}_2.bad.fq'),
-        html = '{sample}/{sample}.afterqc_report.html',
-        json = '{sample}/{sample}.afterqc_report.json',
+        a = '{sample}_1.good.fq',
+        b = '{sample}_2.good.fq',
+        c = temp('{sample}_1.bad.fq'),
+        d = temp('{sample}_2.bad.fq'),
+        html = '{sample}.afterqc_report.html',
+        json = '{sample}.afterqc_report.json',
     log:
         '{sample}/logs/'
     threads: 1
@@ -85,6 +88,19 @@ rule afterqc:
         '''
 
 #-------------------------------------------------------------------------------
+# error correct reads
+rule rcorrector:
+
+
+
+#-------------------------------------------------------------------------------
+# concatenate all reads for each individual and get number of reads for setting assembler memory requiremnets
+rule concatenate:
+
+
+
+#-------------------------------------------------------------------------------
+# Run separate assembly for each individual
 # Might be worthwhile to set memory based on number of reads passing filter,
 # 1G per million reads is recommended for trinity
 
@@ -114,37 +130,65 @@ rule trinity:
         '''
 
 #-------------------------------------------------------------------------------
-# Run CD-HIT-EST on trinity assembly
+rule spades:
+    input:
+    output:
+    log:
+    threads:
+    params:
+    shell:
 
 #-------------------------------------------------------------------------------
-# Split chimeras
+rule shannon:
+    input:
+    output:
+    log:
+    threads:
+    params:
+    shell:
 
 #-------------------------------------------------------------------------------
-# Determine average insert size from trinity assembly
+# possibly merge assemblies from multiple individuals
+rule orthofuse:
+    input:
+    output:
+    log:
+    threads:
+    params:
+    shell:
 
 #-------------------------------------------------------------------------------
-# Assembly with soap using normalized reads from trinity and avg insert determined from trinity assembly
+rule detonate:
+    input:
+    output:
+    log:
+    threads:
+    params:
+    shell:
 
 #-------------------------------------------------------------------------------
-# cdHIT EST on Soap assembly
+rule transrate:
+    input:
+    output:
+    log:
+    threads:
+    params:
+    shell:
 
 #-------------------------------------------------------------------------------
-# Split chimeras
+rule shmlast:
+    input:
+    output:
+    log:
+    threads:
+    params:
+    shell:
 
 #-------------------------------------------------------------------------------
-# bin packer
-
-#-------------------------------------------------------------------------------
-# cdHIT EST on bin packer assembly
-
-#-------------------------------------------------------------------------------
-# Split chimeras
-
-#-------------------------------------------------------------------------------
-# Assembly metrics on soap and trinity if not done yet
-
-#-------------------------------------------------------------------------------
-# Pool assembly scaffolds
-
-#-------------------------------------------------------------------------------
-# Run transdecoder to split chimeric reads and generate open reading frames
+rule sourmash:
+    input:
+    output:
+    log:
+    threads:
+    params:
+    shell:
