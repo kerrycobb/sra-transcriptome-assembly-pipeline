@@ -1,5 +1,5 @@
 species: Escherichia coli
-individuals:
-    - 1:
-        runs:
-            - ERR2198608
+sample: SAMEA104393676
+runs:
+    - ERR2198605
+    - ERR2198606
