@@ -19,12 +19,11 @@ def cli(configfile):
         'qsub '
         '-l nodes=1:ppn=1,mem=250mb,walltime=168:00:00 '
         '-N {name} '
-        '-j oe '
+        # '-j oe '
         '-m e '
         '-M cobbkerry@gmail.com '
         '-d {workdir} '
-        '-o logs/ '
-        '-F {configfile} {workdir} '
+        '-F "{configfile} {workdir}" '
         'qsub-command.sh'
     ).format(
         name=name,

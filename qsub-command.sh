@@ -14,5 +14,4 @@ snakemake \
 -m n \
 -j oe \
 -d {workingdir} \
--o {log} \
 ' "
