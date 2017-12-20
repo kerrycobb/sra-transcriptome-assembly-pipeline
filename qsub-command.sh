@@ -1,3 +1,5 @@
+#!/bin/bash
+
 snakemake \
 --configfile $1
 --workdir $2

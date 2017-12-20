@@ -24,7 +24,8 @@ def cli(configfile):
         '-M cobbkerry@gmail.com '
         '-d {workdir} '
         '-o logs/ '
-        'qsub-command.sh {configfile} {workdir}'
+        '-F {configfile} {workdir} '
+        'qsub-command.sh'
     ).format(
         name=name,
         workdir=workdir,
