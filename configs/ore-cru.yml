@@ -1,0 +1,6 @@
+species: Oreobates curalis
+sample: SAMN06841331
+runs:
+    - SRR5507180
+    - SRR5507181
+    - SRR5507183

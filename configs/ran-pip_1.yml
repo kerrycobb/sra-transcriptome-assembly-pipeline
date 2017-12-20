@@ -1,0 +1,5 @@
+species: Rana pipiens
+sample: SAMN02673468
+runs:
+    - SRR1185245
+    - SRR1185248
